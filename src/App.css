@@ -1,1 +1,84 @@
-@import "tailwindcss";
+:root {
+  color-scheme: dark;
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --panel: #111827;
+  --border: #334155;
+  --button-bg: #1d4ed8;
+  --button-text: #ffffff;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --panel: #ffffff;
+  --border: #cbd5e1;
+  --button-bg: #2563eb;
+  --button-text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel);
+}
+
+.topbar h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.theme-toggle {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.content-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel);
+}
+
+.content-card h1 {
+  margin-top: 0;
+}
+
+.content-card p {
+  margin-bottom: 0;
+}
