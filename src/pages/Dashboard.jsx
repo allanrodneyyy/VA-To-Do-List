@@ -2,7 +2,7 @@ import '../App.css'
 import { Header } from "../components/Header";
 import { DashboardBoxes } from '../components/DashboardBoxes';
 
-export function HomePage({ theme, setTheme }) {
+export function Dashboard({ theme, setTheme }) {
   return (
     <>
       <Header theme={theme} setTheme={setTheme} />
