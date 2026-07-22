@@ -2,20 +2,22 @@
   color-scheme: dark;
   --bg: #0f172a;
   --text: #e2e8f0;
-  --panel: #111827;
+  --panel: #191a1d;
   --border: #334155;
   --button-bg: #1d4ed8;
   --button-text: #ffffff;
+  --hover-panel: #212529;
 }
 
 :root[data-theme='light'] {
   color-scheme: light;
   --bg: #f8fafc;
-  --text: #0f172a;
-  --panel: #ffffff;
+  --text: #080808;
+  --panel: #f0efef;
   --border: #cbd5e1;
   --button-bg: #2563eb;
   --button-text: #ffffff;
+  --hover-panel: #e0e0e0;
 }
 
 * {

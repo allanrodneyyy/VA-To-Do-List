@@ -1,7 +1,7 @@
 import { Link, Routes, Route } from 'react-router'
 import { useEffect, useState } from 'react'
 import { Header } from './components/Header'
-import { HomePage } from './pages/HomePage'
+import { Dashboard } from './pages/Dashboard'
 import './App.css'
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route index element={<HomePage theme={theme} setTheme={setTheme} />} />
+        <Route index element={<Dashboard theme={theme} setTheme={setTheme} />} />
       </Routes>
 
     </>
