@@ -1,5 +1,7 @@
+import { Link, Routes, Route } from 'react-router'
 import { useEffect, useState } from 'react'
 import { Header } from './components/Header'
+import { HomePage } from './pages/HomePage'
 import './App.css'
 
 function App() {
@@ -14,16 +16,12 @@ function App() {
   }, [theme])
 
   return (
-    <div className="app-shell">
-      <Header theme={theme} setTheme={setTheme} />
+    <>
+      <Routes>
+        <Route index element={<HomePage theme={theme} setTheme={setTheme} />} />
+      </Routes>
 
-      <main className="content-card">
-        <h1>VA To Do List</h1>
-        <p>
-          Your to-do app now supports both dark and light themes.
-        </p>
-      </main>
-    </div>
+    </>
   )
 }
 
