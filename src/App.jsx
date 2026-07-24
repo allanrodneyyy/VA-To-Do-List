@@ -2,6 +2,7 @@ import { Link, Routes, Route } from 'react-router'
 import { useEffect, useState } from 'react'
 import { Header } from './components/Header'
 import { Dashboard } from './pages/Dashboard'
+import { Clients } from './pages/Clients'
 import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <>
       <Routes>
         <Route index element={<Dashboard theme={theme} setTheme={setTheme} />} />
+        <Route path="clients" element={<Clients theme={theme} setTheme={setTheme} />} />
       </Routes>
 
     </>

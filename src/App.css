@@ -4,7 +4,7 @@
   --text: #e2e8f0;
   --panel: #191a1d;
   --border: #334155;
-  --button-bg: #1d4ed8;
+  --button-bg: #4c82f5;
   --button-text: #ffffff;
   --hover-panel: #212529;
 }
@@ -15,9 +15,9 @@
   --text: #080808;
   --panel: #f0efef;
   --border: #cbd5e1;
-  --button-bg: #2563eb;
+  --button-bg: #4c82f5;
   --button-text: #ffffff;
-  --hover-panel: #e0e0e0;
+  --hover-panel: #020202;
 }
 
 * {

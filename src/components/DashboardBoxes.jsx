@@ -1,6 +1,7 @@
 import {
   MdOutlineTimer,
-  MdOutlinePriorityHigh
+  MdOutlinePriorityHigh,
+  MdOutlinePendingActions
 } from "react-icons/md";
 
 export function DashboardBoxes() {
@@ -31,7 +32,7 @@ export function DashboardBoxes() {
       <div className='flex flex-col bg-(--panel) p-5 gap-3 rounded-2xl hover:bg-(--hover-panel) cursor-pointer'>
         <div className='flex justify-between font-semibold text-sm'>
           <p>Pending Review</p>
-          <p>X</p>
+          <MdOutlinePendingActions color='#6a7282' />
         </div>
         <div className='flex flex-col'>
           <p className='text-2xl font-extrabold '>0</p>
