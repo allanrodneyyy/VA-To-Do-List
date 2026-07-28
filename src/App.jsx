@@ -1,6 +1,6 @@
 import { Link, Routes, Route } from 'react-router'
 import { useEffect, useState } from 'react'
-import { Header } from './components/Header'
+import { Header } from './components/Layout/Header'
 import { Dashboard } from './pages/Dashboard'
 import { Clients } from './pages/Clients'
 import './App.css'

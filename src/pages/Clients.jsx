@@ -1,6 +1,6 @@
-import { Header } from "../components/Header";
-import Buttons from "../utils/Buttons";
-import { ClientsTable } from "./ClientsTable";
+import { Header } from "../components/Layout/Header";
+import Buttons from "../components/ui/buttons/Buttons";
+import { ClientsTable } from "../components/Layout/Clients/ClientsTable";
 import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
 import '../App.css'
 

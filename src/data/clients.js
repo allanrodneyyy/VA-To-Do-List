@@ -1,4 +1,4 @@
-export class ClientsData {
+export class Clients {
 
   clientsList = [];
   #storageKey = '';

@@ -1,6 +1,6 @@
 import '../App.css'
-import { Header } from "../components/Header";
-import { DashboardBoxes } from '../components/DashboardBoxes';
+import { Header } from "../components/Layout/Header";
+import { DashboardBoxes } from '../components/Layout/Dashboard/DashboardBoxes';
 
 export function Dashboard({ theme, setTheme }) {
   return (

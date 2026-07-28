@@ -1,10 +1,9 @@
-import { ClientsData } from "../model/ClientsData";
+import { Clients } from "../../../data/clients";
 
 export function ClientsTable() {
 
-
-  const clientsData = new ClientsData('Clients');
-  const datas = clientsData.clientsList;
+  const clients = new Clients('Clients');
+  const datas = clients.clientsList;
 
   const tableHeads = [
     'Client Name',
