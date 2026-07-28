@@ -1,10 +1,11 @@
-
 import { Header } from "../components/Header";
-import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
 import Buttons from "../utils/Buttons";
+import { ClientsTable } from "./ClientsTable";
+import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
 import '../App.css'
 
 export function Clients({ theme, setTheme }) {
+
   return (
     <>
       <title>Clients</title>
@@ -36,6 +37,9 @@ export function Clients({ theme, setTheme }) {
             </section>
           </div>
         </section>
+
+        <ClientsTable
+        />
       </section>
     </>
   );
