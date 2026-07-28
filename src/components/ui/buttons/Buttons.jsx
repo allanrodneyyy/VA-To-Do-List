@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Buttons({ children, variant = 'primary', onClick }) {
   // Base classes that apply to every button variant
-  const baseStyles = "font-medium py-2 px-4 rounded-md transition duration-200 ease-in-out active:scale-95 shadow-sm";
+  const baseStyles = "font-medium py-2 px-4 rounded-md transition duration-200 ease-in-out active:scale-95 shadow-sm cursor-pointer";
 
   // Design system variations
   const variants = {

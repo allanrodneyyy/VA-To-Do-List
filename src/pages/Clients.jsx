@@ -1,10 +1,13 @@
 import { Header } from "../components/Layout/Header";
 import Buttons from "../components/ui/buttons/Buttons";
 import { ClientsTable } from "../components/Layout/Clients/ClientsTable";
+import { ClientsAddModal } from "../components/ui/modals/ClientsAddModal";
 import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
 import '../App.css'
+import { useRef } from "react";
 
 export function Clients({ theme, setTheme }) {
+  const dialogRef = useRef(null);
 
   return (
     <>
@@ -19,8 +22,11 @@ export function Clients({ theme, setTheme }) {
               Manage your clientele.
             </p>
           </section>
-
-          <Buttons variant="primary" className="flex "><MdOutlineAdd />Add Client</Buttons>
+          <ClientsAddModal dialogRef={dialogRef} />
+          <button onClick={dialogRef.current?.showModal()} className="border">
+            Add Client
+          </button>
+          {/* <Buttons variant="primary" className="flex" ><MdOutlineAdd />Add Client</Buttons> */}
         </div>
 
         <section className="flex  sm:grid sm:grid-cols-2" >

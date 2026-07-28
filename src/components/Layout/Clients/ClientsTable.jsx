@@ -1,4 +1,5 @@
 import { Clients } from "../../../data/clients";
+import Buttons from "../../ui/buttons/Buttons";
 
 export function ClientsTable() {
 
@@ -14,8 +15,6 @@ export function ClientsTable() {
     'Contact',
     'Actions'
   ]
-
-  console.log(datas);
 
   return (
     <section className="max-h-96 overflow-x-auto">
@@ -40,7 +39,8 @@ export function ClientsTable() {
               <td> { } </td>
               <td> {data.phone ? data.phone : '-'} </td>
               <td className="text-center ">
-                <button className="cursor-pointer hover:bg-gray-100 px-5 rounded py-1">
+                <button className="cursor-pointer hover:bg-gray-200 px-5 rounded py-1"
+                >
                   View
                 </button>
               </td>
