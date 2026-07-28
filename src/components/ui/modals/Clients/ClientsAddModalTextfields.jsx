@@ -18,7 +18,7 @@ export function ClientsAddModalTextfields() {
         fields.map((field) => (
           <div key={field.fieldName} className="flex flex-col gap-0.5">
             <label htmlFor={`${field.fieldName}`} className="font-semibold">{field.label}</label>
-            <div className="flex items-center gap-1 p-0.5
+            <div className="gap-1 p-0.5
             text-base
              focus-within:border-blue-500
              focus-within:border

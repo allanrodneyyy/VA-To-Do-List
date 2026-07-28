@@ -18,10 +18,12 @@ export function ClientsAddModal({ dialogRef }) {
           </section>
         </header>
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 mb-5">
+
           <ClientsAddModalTextfields />
           <ClientsAddDropdowns />
+
           <div className="flex flex-col gap-0.5 
-            col-span-2">
+            cols-span-1 sm:col-span-2">
             <label htmlFor="notes" className="font-semibold">Notes</label>
             <section className="flex items-center gap-1 p-0.5
             text-base
