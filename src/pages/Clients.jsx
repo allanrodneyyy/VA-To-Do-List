@@ -60,8 +60,8 @@ export function Clients({ theme, setTheme }) {
               <MdOutlineSearch size={23} color="gray" className="ml-1.5" />
               <input type="text" name="" id="" placeholder="Search client..." className="w-full outline-0" />
             </section>
-            <section className="min-w-full sm:w-1/2 max-w-4/5 flex items-center">
-              <DropdownSort />
+            <section className="flex items-center">
+              <DropdownSort theme={theme} setTheme={setTheme} />
             </section>
           </div>
         </section>

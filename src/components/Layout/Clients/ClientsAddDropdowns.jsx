@@ -46,11 +46,13 @@ export function ClientsAddDropdowns() {
              focus-within:border-blue-500
              focus-within:border
              focus-within:rounded">
-            <select name={`${dropdown.fieldName}`} id={`${dropdown.fieldName}`} className="outline-0 border-(--border) border rounded w-full p-1">
-              {dropdown.options.map((option, index) => (
-                <option key={option.id} value={option.id} >{option.label}</option>
-              ))}
-            </select>
+            <select name={`${dropdown.id}`} id={`${dropdown.fieldName}`} className={`outline-0 border-(--border) border rounded w-full p-2 ${theme === 'dark' ? 'bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'}`} >
+              {
+                dropdown.options.map((option, index) => (
+                  <option key={option.id} value={option.id} >{option.label}</option>
+                ))
+              }
+            </select >
           </div>
         </div>
       ))}
