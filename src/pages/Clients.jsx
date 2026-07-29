@@ -47,7 +47,7 @@ export function Clients({ theme, setTheme }) {
               setFormIsOpen(true)
             }} >
             <MdOutlineAdd />Add Client</Buttons>
-          {formIsOpen && <ClientsAddModal dialogRef={dialogRef} addClient={addClient} setFormIsOpen={setFormIsOpen} clients={clientsRef.current} />}
+          {formIsOpen && <ClientsAddModal dialogRef={dialogRef} addClient={addClient} setFormIsOpen={setFormIsOpen} clients={clientsRef.current} theme={theme} setTheme={setTheme} />}
 
         </div>
 

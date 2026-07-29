@@ -1,4 +1,4 @@
-export function ClientsAddDropdowns() {
+export function ClientsAddDropdowns({ theme, setTheme }) {
   const dropdowns = [{
     fieldName: "status",
     label: 'Status',

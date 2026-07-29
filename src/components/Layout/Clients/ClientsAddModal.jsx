@@ -4,7 +4,7 @@ import { ClientsAddDropdowns } from "./ClientsAddDropdowns";
 import { MdOutlineAdd } from "react-icons/md";
 import Buttons from "../../ui/buttons/Buttons";
 
-export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, clients }) {
+export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, clients, theme, setTheme }) {
 
   useEffect(() => {
     dialogRef.current?.showModal();
@@ -43,7 +43,7 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, clients }
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 mb-5">
 
           <ClientsAddModalTextfields />
-          <ClientsAddDropdowns />
+          <ClientsAddDropdowns theme={theme} setTheme={setTheme} />
 
           <div className="flex flex-col gap-0.5 
             cols-span-1 sm:col-span-2">
