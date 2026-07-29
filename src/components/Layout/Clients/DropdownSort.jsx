@@ -23,7 +23,7 @@ export function DropdownSort() {
   return (
     <>
       {dropdowns.map((dropdown) => (
-        <select name={`${dropdown.id}`} id={`${dropdown.fieldName}`} className="outline-0 border-(--border) border rounded w-full p-1" >
+        <select name={`${dropdown.id}`} id={`${dropdown.fieldName}`} className="outline-0 border-(--border) border rounded w-full p-2" >
           {
             dropdown.options.map((option, index) => (
               <option key={option.id} value={option.id} >{option.label}</option>
