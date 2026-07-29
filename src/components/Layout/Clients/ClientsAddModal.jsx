@@ -21,8 +21,7 @@ export function ClientsAddModal({ dialogRef, setClientData, setFormIsOpen, clien
     const clientData = Object.fromEntries(formData);
 
     //This should be async in the future
-    clients.addClients(clientData);
-    setClientData(prev => [...prev, clientData]);
+    clients.addClients({ id: crypto.randomUUID(), ...clientData });
 
     handleClose(e);
   }

@@ -44,7 +44,7 @@ export function ClientsTable({ clientdata }) {
 
         <tbody>
           {clientdata.map((data) => (
-            <tr key={data.name} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
+            <tr key={data.id} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
               <td className="p-3"> {data.name} </td>
               <td className="text-center"> <StatusButton id={data.status} /> </td>
               <td> { } </td>
