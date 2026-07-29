@@ -1,13 +1,24 @@
 import { Header } from "../components/Layout/Header";
 import Buttons from "../components/ui/buttons/Buttons";
 import { ClientsTable } from "../components/Layout/Clients/ClientsTable";
-import { ClientsAddModal } from "../components/ui/modals/Clients/ClientsAddModal";
+import { ClientsAddModal } from "../components/Layout/Clients/ClientsAddModal";
 import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
+import { Clients as ClientClass } from "../data/clients";
 import '../App.css'
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Clients({ theme, setTheme }) {
   const dialogRef = useRef(null);
+  const clientsRef = useRef(null);
+
+  const [clientdata, setClientData] = useState([]);
+  const [formIsOpen, setFormIsOpen] = useState(false); -
+
+    useEffect(() => {
+      clientsRef.current = new ClientClass('Clients');
+      setClientData(clientsRef.current.clientsList);
+    }, [])
+
   return (
     <>
       <title>Clients</title>
@@ -21,9 +32,14 @@ export function Clients({ theme, setTheme }) {
               Manage your clients.
             </p>
           </section>
-          <ClientsAddModal dialogRef={dialogRef} />
 
-          <Buttons variant="primary" className="flex" onClick={() => dialogRef.current?.showModal()} ><MdOutlineAdd />Add Client</Buttons>
+          <Buttons variant="primary" className="flex"
+            onClick={(e) => {
+              setFormIsOpen(true)
+            }} >
+            <MdOutlineAdd />Add Client</Buttons>
+          {formIsOpen && <ClientsAddModal dialogRef={dialogRef} setClientData={setClientData} setFormIsOpen={setFormIsOpen} clients={clientsRef.current} />}
+
         </div>
 
         <section className="flex  sm:grid sm:grid-cols-2" >
@@ -41,9 +57,8 @@ export function Clients({ theme, setTheme }) {
           </div>
         </section>
 
-        <ClientsTable
-        />
-      </section>
+        <ClientsTable setClientData={setClientData} clientdata={clientdata} />
+      </section >
     </>
   );
 

@@ -25,7 +25,7 @@ export function Header({ theme, setTheme }) {
     {
       name: "Clients",
       icon: <MdOutlinePeople size={24} />,
-      link: "clients",
+      link: "/clients",
     },
     {
       name: "Tasks",

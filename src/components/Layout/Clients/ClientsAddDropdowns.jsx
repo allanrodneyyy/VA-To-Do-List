@@ -48,7 +48,7 @@ export function ClientsAddDropdowns() {
              focus-within:rounded">
             <select name={`${dropdown.fieldName}`} id={`${dropdown.fieldName}`} className="outline-0 border-(--border) border rounded w-full p-1">
               {dropdown.options.map((option, index) => (
-                <option key={option.id} value="volvo" >{option.label}</option>
+                <option key={option.id} value={option.id} >{option.label}</option>
               ))}
             </select>
           </div>

@@ -1,17 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PiCheckLight } from "react-icons/pi";
 import { ClientsAddModalTextfields } from "./ClientsAddModalTextfields";
 import { ClientsAddDropdowns } from "./ClientsAddDropdowns";
+import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
+import Buttons from "../../ui/buttons/Buttons";
+import { Clients } from "../../../data/clients";
 
-export function ClientsAddModal({ dialogRef }) {
-  const [status, setStatus] = useState("Active");
+export function ClientsAddModal({ dialogRef, setClientData, setFormIsOpen, clients }) {
+
+  useEffect(() => {
+    dialogRef.current?.showModal();
+  }, [])
+
+  const handleSubmit = (e) => {
+    //Prevents the page from reloading
+    e.preventDefault();
+    //Get Form data in the targetted from
+    //In this case, Add Client Form.
+    const formData = new FormData(e.target.form);
+    const clientData = Object.fromEntries(formData);
+
+    //This should be async in the future
+    clients.addClients(clientData);
+    setClientData(prev => [...prev, clientData]);
+
+    handleClose(e);
+  }
+
+  const handleClose = (e) => {
+    //Prevents the page from reloading
+    e.preventDefault();
+
+    //Closing the modal
+    dialogRef.current.close();
+
+    setFormIsOpen(false);
+  }
+
   return (
     <dialog ref={dialogRef} className="m-auto w-[90%] sm:max-w-2/5 backdrop:backdrop-contrast-50 p-5 rounded-xl">
       <form className="text-sm sm:text-base">
         <header className="mb-5">
           <section className="flex justify-between">
             <p className="font-bold">Add New Client</p>
-            <button onClick={(e) => { e.preventDefault(); dialogRef.current.close() }}>x</button>
+            <button className="hover:cursor-pointer" onClick={handleClose}>x</button>
           </section>
           <section>
             <p className="text-gray-500">Create a new client profile</p>
@@ -34,8 +66,11 @@ export function ClientsAddModal({ dialogRef }) {
             </section>
           </div>
         </section>
-        <footer>
-          <button type="submit" >Create client</button>
+        <footer className="flex justify-end gap-2">
+          <Buttons variant="primary" type="submit" className="flex" onClick={handleSubmit}>
+            <MdOutlineAdd />
+            Create Client
+          </Buttons>
         </footer>
 
       </form>

@@ -5,14 +5,14 @@ export class Clients {
 
   constructor(storageKey) {
     this.#storageKey = 'Clients';
-    this.#loadFromLocalStorage();
+    this.loadFromLocalStorage();
   }
 
-  saveToLocalStorage() {
+  #saveToLocalStorage() {
     localStorage.setItem(this.#storageKey, JSON.stringify(this.clientsList));
   }
 
-  #loadFromLocalStorage() {
+  loadFromLocalStorage() {
     this.clientsList = JSON.parse(localStorage.getItem(this.#storageKey)) || [{
       id: 0,
       name: 'First Client',
@@ -23,6 +23,12 @@ export class Clients {
       priority: 1,
       notes: ''
     }];
+  }
+
+  addClients(data) {
+    this.clientsList.push(data);
+    this.#saveToLocalStorage(this.clientsList);
+    console.log(this.clientsList);
   }
 
 } 

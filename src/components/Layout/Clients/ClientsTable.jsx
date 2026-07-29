@@ -1,10 +1,8 @@
+import { useEffect } from "react";
 import { Clients } from "../../../data/clients";
 import Buttons from "../../ui/buttons/Buttons";
 
-export function ClientsTable() {
-
-  const clients = new Clients('Clients');
-  const datas = clients.clientsList;
+export function ClientsTable({ clientdata }) {
 
   const tableHeads = [
     'Client Name',
@@ -16,13 +14,28 @@ export function ClientsTable() {
     'Actions'
   ]
 
+  const statuses = {
+    1: 'Active',
+    2: 'On hold',
+    3: 'Completed'
+  }
+
+
+  function StatusButton({ id }) {
+    return (
+      <button>
+        {statuses[id]}
+      </button>
+    )
+  }
+
   return (
-    <section className="max-h-96 overflow-x-auto">
+    <section className="overflow-x-auto">
       <table className="overflow-y-scroll w-full text-sm sm:text-base">
         <thead className="w-full border  border-gray-200">
           <tr>
             {tableHeads.map((title) => (
-              <th key={title} className="text-gray-500 p-2">
+              <th key={title + crypto.randomUUID()} className="text-gray-500 p-2">
                 {title}
               </th>
             ))}
@@ -30,11 +43,11 @@ export function ClientsTable() {
         </thead>
 
         <tbody>
-          {datas.map((data) => (
+          {clientdata.map((data) => (
             <tr key={data.name} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
               <td className="p-3"> {data.name} </td>
-              <td> {data.status} </td>
-              <td> {data.priority} </td>
+              <td className="text-center"> <StatusButton id={data.status} /> </td>
+              <td> { } </td>
               <td> { } </td>
               <td> { } </td>
               <td> {data.phone ? data.phone : '-'} </td>
@@ -45,8 +58,6 @@ export function ClientsTable() {
                 </button>
               </td>
             </tr>
-
-
           ))}
         </tbody>
       </table>
