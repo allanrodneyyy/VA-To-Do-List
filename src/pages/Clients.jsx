@@ -12,9 +12,12 @@ export function Clients({ theme, setTheme }) {
 
   const dialogRef = useRef(null);
   const clientsRef = useRef(null);
+  const searchRef = useRef(null);
 
-  const [clientdata, setClientData] = useState([]);
+  const [clientData, setClientData] = useState([]);
   const [formIsOpen, setFormIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
 
   useEffect(() => {
     clientsRef.current = new ClientClass('Clients');
@@ -26,6 +29,8 @@ export function Clients({ theme, setTheme }) {
     // setClientData(prev => [...prev, newClientData])
   }
 
+  const filteredClients = clientData.filter(data =>
+    data.name?.toLowerCase().includes(search.trim().toLowerCase()));
 
 
   return (
@@ -58,7 +63,8 @@ export function Clients({ theme, setTheme }) {
             text-base
              focus-within:border-blue-500">
               <MdOutlineSearch size={23} color="gray" className="ml-1.5" />
-              <input type="text" name="" id="" placeholder="Search client..." className="w-full outline-0" />
+              <input type="text" name="" id="" placeholder="Search client..." className="w-full outline-0" value={search}
+                onChange={(e) => setSearch(e.target.value)} />
             </section>
             <section className="flex items-center">
               <DropdownSort theme={theme} setTheme={setTheme} />
@@ -66,7 +72,7 @@ export function Clients({ theme, setTheme }) {
           </div>
         </section>
 
-        <ClientsTable setClientData={setClientData} clientdata={clientdata} />
+        <ClientsTable setClientData={setClientData} clientData={filteredClients} />
       </section >
     </>
   );

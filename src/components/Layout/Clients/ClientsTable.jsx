@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Clients } from "../../../data/clients";
 import Buttons from "../../ui/buttons/Buttons";
 
-export function ClientsTable({ clientdata }) {
+export function ClientsTable({ clientData }) {
 
   const tableHeads = [
     'Client Name',
@@ -29,6 +29,7 @@ export function ClientsTable({ clientdata }) {
     )
   }
 
+
   return (
     <section className="overflow-x-auto">
       <table className="overflow-y-scroll w-full text-sm sm:text-base">
@@ -43,7 +44,7 @@ export function ClientsTable({ clientdata }) {
         </thead>
 
         <tbody>
-          {clientdata.map((data) => (
+          {clientData.map((data) => (
             <tr key={data.id} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
               <td className="p-3"> {data.name} </td>
               <td className="text-center"> <StatusButton id={data.status} /> </td>
