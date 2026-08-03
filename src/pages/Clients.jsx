@@ -18,6 +18,7 @@ export function Clients({ theme, setTheme }) {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [search, setSearch] = useState("");
 
+  const [sortStatus, setSortStatus] = useState(0);
 
   useEffect(() => {
     clientsRef.current = new ClientClass('Clients');
@@ -29,8 +30,24 @@ export function Clients({ theme, setTheme }) {
     // setClientData(prev => [...prev, newClientData])
   }
 
-  const filteredClients = clientData.filter(data =>
-    data.name?.toLowerCase().includes(search.trim().toLowerCase()));
+  const searchClients = (clients, query, status) => {
+    status = Number(status);
+    const searchInput = query.trim().toLowerCase();
+
+    return clients.filter(client => {
+
+      const matchesSearch = !searchInput ||
+        client.name?.toLowerCase().includes(searchInput);
+
+      const matchesStatus = status === 0 ||
+        Number(client.status) === status;
+
+      return matchesSearch && matchesStatus;
+    });
+  };
+
+  const filteredClients = searchClients(clientData, search, sortStatus);
+
 
 
   return (
@@ -67,7 +84,7 @@ export function Clients({ theme, setTheme }) {
                 onChange={(e) => setSearch(e.target.value)} />
             </section>
             <section className="flex items-center">
-              <DropdownSort theme={theme} setTheme={setTheme} />
+              <DropdownSort theme={theme} setTheme={setTheme} setSortStatus={setSortStatus} sortStatus={sortStatus} />
             </section>
           </div>
         </section>
