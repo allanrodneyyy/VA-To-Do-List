@@ -23,7 +23,7 @@ export function Clients({ theme, setTheme }) {
 
   const addClient = (newClientData) => {
     clientsRef.current.addClients({ id: crypto.randomUUID(), ...newClientData });
-    setClientData(prev => [...prev, newClientData])
+    // setClientData(prev => [...prev, newClientData])
   }
 
 
