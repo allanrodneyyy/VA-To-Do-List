@@ -26,8 +26,16 @@ export function Clients({ theme, setTheme }) {
   }, []);
 
   const addClient = (newClientData) => {
-    clientsRef.current.addClients({ id: crypto.randomUUID(), ...newClientData });
+    // clientsRef.current.addClients({ id: crypto.randomUUID(), ...newClientData });
     // setClientData(prev => [...prev, newClientData])
+    const newClient = {
+      id: crypto.randomUUID(),
+      ...newClientData
+    };
+
+    clientsRef.current.addClients(newClient);
+
+    setClientData([...clientsRef.current.clientsList]);
   }
 
   const searchClients = (clients, query, status) => {
@@ -76,9 +84,9 @@ export function Clients({ theme, setTheme }) {
         <section className="flex  sm:grid sm:grid-cols-2 border`" >
           <div className="grid grid-cols-2 gap-2">
             <section className="flex items-center gap-2 p-1
-            border border-(--border) rounded
-            text-base
-             focus-within:border-blue-500">
+              border border-(--border) rounded
+              text-base
+              focus-within:border-blue-500">
               <MdOutlineSearch size={23} color="gray" className="ml-1.5" />
               <input type="text" name="" id="" placeholder="Search client..." className="w-full outline-0" value={search}
                 onChange={(e) => setSearch(e.target.value)} />
