@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Clients } from "../../../data/clients";
 import Buttons from "../../ui/buttons/Buttons";
+import { Link } from "react-router";
 
 export function ClientsTable({ clientData }) {
 
@@ -30,13 +31,15 @@ export function ClientsTable({ clientData }) {
   }
 
 
+
+
   return (
     <section className="overflow-x-auto">
       <table className="overflow-y-scroll w-full text-sm sm:text-base">
         <thead className="w-full border  border-gray-200">
           <tr>
             {tableHeads.map((title) => (
-              <th key={title + crypto.randomUUID()} className="text-gray-500 p-2">
+              <th key={title} className="text-gray-500 p-2">
                 {title}
               </th>
             ))}
@@ -53,10 +56,10 @@ export function ClientsTable({ clientData }) {
               <td> { } </td>
               <td> {data.phone ? data.phone : '-'} </td>
               <td className="text-center ">
-                <button className="cursor-pointer hover:bg-gray-200 px-5 rounded py-1"
-                >
+                <Link className="cursor-pointer hover:bg-gray-200 px-5 rounded py-1" value={data.id}
+                  to={`/client/${data.id}`}>
                   View
-                </button>
+                </Link>
               </td>
             </tr>
           ))}

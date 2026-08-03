@@ -21,6 +21,7 @@ function App() {
       <Routes>
         <Route index element={<Dashboard theme={theme} setTheme={setTheme} />} />
         <Route path="clients" element={<Clients theme={theme} setTheme={setTheme} />} />
+        {/* <Route path="/client/:id" element={<ClientPage />} /> */}
       </Routes>
 
     </>
