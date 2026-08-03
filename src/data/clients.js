@@ -19,7 +19,6 @@ export class Clients {
   addClients(data) {
     this.clientsList.push(data);
     this.#saveToLocalStorage(this.clientsList);
-    console.log(this.clientsList);
   }
 
 } 

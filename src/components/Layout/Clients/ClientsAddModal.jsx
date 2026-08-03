@@ -16,7 +16,9 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, clients, 
     //Get Form data in the targetted from
     //In this case, Add Client Form.
     const formData = new FormData(e.target);
+
     const newClientData = Object.fromEntries(formData);
+    console.log(newClientData)
     addClient(newClientData);
     //This should be async in the future
     handleClose();
