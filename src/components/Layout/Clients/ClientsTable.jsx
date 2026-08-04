@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Clients } from "../../../data/clients";
 import Buttons from "../../ui/buttons/Buttons";
 import { Link } from "react-router";
+import { dropdowns } from "../../../data/dropdowns";
 
 export function ClientsTable({ clientData }) {
 
@@ -30,6 +31,20 @@ export function ClientsTable({ clientData }) {
     )
   }
 
+  function DisplayPriority({ id }) {
+    {
+
+      if (Number(id) === 1)
+        return <p>Low</p>
+      else if (Number(id) === 2)
+        return <p>Medium</p>
+      else
+        return <p>High</p>
+    }
+  }
+
+
+
 
 
 
@@ -51,7 +66,7 @@ export function ClientsTable({ clientData }) {
             <tr key={data.id} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
               <td className="p-3"> {data.name} </td>
               <td className="text-center"> <StatusButton id={data.status} /> </td>
-              <td> { } </td>
+              <td className="text-center"><DisplayPriority id={data.priority} /> </td>
               <td> { } </td>
               <td> { } </td>
               <td> {data.phone ? data.phone : '-'} </td>

@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ClientsAddModalTextfields } from "./ClientsAddModalTextfields";
 import { ClientsAddDropdowns } from "./ClientsAddDropdowns";
 import { MdOutlineAdd } from "react-icons/md";
 import Buttons from "../../ui/buttons/Buttons";
 
-export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, setTheme }) {
+export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, setTheme, nameRef }) {
 
   useEffect(() => {
     dialogRef.current?.showModal();
   }, [])
+
+  const [nameIsValid, setNameIsValid] = useState(true);
 
   const handleSubmit = (e) => {
     //Prevents the page from reloading
@@ -16,12 +18,18 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, se
     //Get Form data in the targetted from
     //In this case, Add Client Form.
     const formData = new FormData(e.target);
-
     const newClientData = Object.fromEntries(formData);
-    console.log(newClientData)
-    addClient(newClientData);
-    //This should be async in the future
-    handleClose();
+
+    if (!newClientData.name) {
+      //Validation check for name
+      nameRef.current.focus();
+      setNameIsValid(false);
+    } else {
+      //This should be async in the future
+      addClient(newClientData);
+      handleClose();
+    }
+
   }
 
   const handleClose = () => {
@@ -44,7 +52,7 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, se
         </header>
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 mb-5">
 
-          <ClientsAddModalTextfields />
+          <ClientsAddModalTextfields nameRef={nameRef} nameIsValid={nameIsValid} />
           <ClientsAddDropdowns theme={theme} setTheme={setTheme} />
 
           <div className="flex flex-col gap-0.5 

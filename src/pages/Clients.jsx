@@ -11,6 +11,7 @@ export function Clients({ theme, setTheme, clientData, setClientData, clientsRef
 
   const dialogRef = useRef(null);
   const searchRef = useRef(null);
+  const nameRef = useRef('');
 
 
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -18,15 +19,14 @@ export function Clients({ theme, setTheme, clientData, setClientData, clientsRef
   const [sortStatus, setSortStatus] = useState(0);
 
   const addClient = (newClientData) => {
-    // clientsRef.current.addClients({ id: crypto.randomUUID(), ...newClientData });
-    // setClientData(prev => [...prev, newClientData])
+
+
     const newClient = {
       id: crypto.randomUUID(),
       ...newClientData
     };
 
     clientsRef.current.addClients(newClient);
-
     setClientData([...clientsRef.current.clientsList]);
   }
 
@@ -66,7 +66,15 @@ export function Clients({ theme, setTheme, clientData, setClientData, clientsRef
               setFormIsOpen(true)
             }} >
             <MdOutlineAdd />Add Client</Buttons>
-          {formIsOpen && <ClientsAddModal dialogRef={dialogRef} addClient={addClient} setFormIsOpen={setFormIsOpen} theme={theme} setTheme={setTheme} />}
+          {formIsOpen &&
+            <ClientsAddModal
+              dialogRef={dialogRef}
+              addClient={addClient}
+              setFormIsOpen={setFormIsOpen}
+              theme={theme} setTheme={setTheme}
+              nameRef={nameRef}
+            />
+          }
 
         </div>
 

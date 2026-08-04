@@ -23,7 +23,7 @@ export function ClientPage({ theme, setTheme, setClientData, clientData }) {
     return (
       <>
         <Header theme={theme} setTheme={setTheme} />
-
+        <title>{viewClient.name}</title>
         <section className="flex flex-col p-5 gap-5">
 
           <section className="flex justify-between sm:hidden">
