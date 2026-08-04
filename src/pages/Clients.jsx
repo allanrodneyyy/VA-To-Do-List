@@ -5,25 +5,17 @@ import { DropdownSort } from "../components/Layout/Clients/DropdownSort";
 import { ClientsTable } from "../components/Layout/Clients/ClientsTable";
 import { ClientsAddModal } from "../components/Layout/Clients/ClientsAddModal";
 import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
-import { Clients as ClientClass } from "../data/clients";
 import '../App.css'
 
-export function Clients({ theme, setTheme }) {
+export function Clients({ theme, setTheme, clientData, setClientData, clientsRef }) {
 
   const dialogRef = useRef(null);
-  const clientsRef = useRef(null);
   const searchRef = useRef(null);
 
-  const [clientData, setClientData] = useState([]);
+
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [search, setSearch] = useState("");
-
   const [sortStatus, setSortStatus] = useState(0);
-
-  useEffect(() => {
-    clientsRef.current = new ClientClass('Clients');
-    setClientData(clientsRef.current.clientsList);
-  }, []);
 
   const addClient = (newClientData) => {
     // clientsRef.current.addClients({ id: crypto.randomUUID(), ...newClientData });
@@ -43,7 +35,6 @@ export function Clients({ theme, setTheme }) {
     const searchInput = query.trim().toLowerCase();
 
     return clients.filter(client => {
-
       const matchesSearch = !searchInput ||
         client.name?.toLowerCase().includes(searchInput);
 
@@ -55,8 +46,6 @@ export function Clients({ theme, setTheme }) {
   };
 
   const filteredClients = searchClients(clientData, search, sortStatus);
-
-
 
   return (
     <>
@@ -77,7 +66,7 @@ export function Clients({ theme, setTheme }) {
               setFormIsOpen(true)
             }} >
             <MdOutlineAdd />Add Client</Buttons>
-          {formIsOpen && <ClientsAddModal dialogRef={dialogRef} addClient={addClient} setFormIsOpen={setFormIsOpen} clients={clientsRef.current} theme={theme} setTheme={setTheme} />}
+          {formIsOpen && <ClientsAddModal dialogRef={dialogRef} addClient={addClient} setFormIsOpen={setFormIsOpen} theme={theme} setTheme={setTheme} />}
 
         </div>
 

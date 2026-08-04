@@ -16,7 +16,7 @@ export function ClientViewBoxes() {
     <>
       {
         ClientViewBoxes.map((info) => (
-          <section className="flex items-center bg-(--panel) p-5 gap-5 rounded-2xl hover:bg-(--hover-panel) ">
+          <section className="flex items-center bg-(--panel) p-5 gap-5 rounded-2xl hover:bg-(--hover-panel) " key={info.label}>
             <div className="">
               {info.icon}
             </div>

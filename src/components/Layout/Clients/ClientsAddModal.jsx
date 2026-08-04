@@ -4,7 +4,7 @@ import { ClientsAddDropdowns } from "./ClientsAddDropdowns";
 import { MdOutlineAdd } from "react-icons/md";
 import Buttons from "../../ui/buttons/Buttons";
 
-export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, clients, theme, setTheme }) {
+export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, setTheme }) {
 
   useEffect(() => {
     dialogRef.current?.showModal();
@@ -31,7 +31,7 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, clients, 
   }
 
   return (
-    <dialog ref={dialogRef} className="m-auto w-[90%] sm:max-w-2/5 backdrop:backdrop-contrast-50 p-5 rounded-xl">
+    <dialog ref={dialogRef} className="m-auto w-[90%] sm:max-w-4/5 md:max-w-3/5 lg:max-w-2/5 backdrop:backdrop-contrast-50 p-5 rounded-xl">
       <form className="text-sm sm:text-base" onSubmit={handleSubmit}>
         <header className="mb-5">
           <section className="flex justify-between">
