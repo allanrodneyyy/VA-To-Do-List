@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Header } from './components/Layout/Header'
 import { Dashboard } from './pages/Dashboard'
 import { Clients } from './pages/Clients'
+import { ClientPage } from './pages/ClientPage'
 import './App.css'
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <Routes>
         <Route index element={<Dashboard theme={theme} setTheme={setTheme} />} />
         <Route path="clients" element={<Clients theme={theme} setTheme={setTheme} />} />
-        {/* <Route path="/client/:id" element={<ClientPage />} /> */}
+        <Route path="/client/:id" element={<ClientPage theme={theme} setTheme={setTheme} />} />
       </Routes>
 
     </>
