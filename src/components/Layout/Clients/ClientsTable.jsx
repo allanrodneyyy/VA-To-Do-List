@@ -69,7 +69,7 @@ export function ClientsTable({ clientData }) {
               <td className="text-center"><DisplayPriority id={data.priority} /> </td>
               <td> { } </td>
               <td> { } </td>
-              <td> {data.phone ? data.phone : '-'} </td>
+              <td className="text-center"> {data.phone ? data.phone : '-'} </td>
               <td className="text-center ">
                 <Link className="cursor-pointer hover:bg-gray-200 px-5 rounded py-1" value={data.id}
                   to={`/client/${data.id}`}>

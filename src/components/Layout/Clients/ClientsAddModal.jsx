@@ -6,11 +6,19 @@ import Buttons from "../../ui/buttons/Buttons";
 
 export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, setTheme, nameRef }) {
 
+  const [numberOnly, setNumberOnly] = useState('');
+  const [nameIsValid, setNameIsValid] = useState(true);
+
   useEffect(() => {
     dialogRef.current?.showModal();
-  }, [])
+  }, []);
 
-  const [nameIsValid, setNameIsValid] = useState(true);
+  const handleNumbers = (e) => {
+    const numberValue = e.target.value.replace(/[^0-9]/g, '');
+
+    setNumberOnly(numberValue);
+  }
+
 
   const handleSubmit = (e) => {
     //Prevents the page from reloading
@@ -52,7 +60,7 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, se
         </header>
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 mb-5">
 
-          <ClientsAddModalTextfields nameRef={nameRef} nameIsValid={nameIsValid} />
+          <ClientsAddModalTextfields nameRef={nameRef} nameIsValid={nameIsValid} numberOnly={numberOnly} handleNumbers={handleNumbers} />
           <ClientsAddDropdowns theme={theme} setTheme={setTheme} />
 
           <div className="flex flex-col gap-0.5 

@@ -1,4 +1,4 @@
-export function ClientsAddModalTextfields({ nameRef, nameIsValid }) {
+export function ClientsAddModalTextfields({ nameRef, nameIsValid, numberOnly, handleNumbers }) {
   const fields = [{
     fieldName: "name",
     label: 'Name'
@@ -15,24 +15,46 @@ export function ClientsAddModalTextfields({ nameRef, nameIsValid }) {
   return (
     <>
       {
-        fields.map((field) => (
-          <div key={field.fieldName} className="flex flex-col gap-0.5">
-            <label htmlFor={field.fieldName} className="font-semibold" >{field.label} {field.fieldName === 'name' ? '*' : ''}</label>
-            <div className={` p-0.5
-            text-base
-             focus-within:border
-             focus-within:rounded ${!nameIsValid && field.fieldName === 'name' ? 'focus-within:border-red-500' : 'focus-within:border-blue-500'}`}>
-              <input type="text" id={field.fieldName} name={field.fieldName} ref={field.fieldName === 'name' ? nameRef : null}
-                className="outline-0 border-(--border) border rounded w-full p-1" />
-            </div>
+        fields.map((field) => {
+          const isName = field.fieldName === "name";
+          const isPhone = field.fieldName === "phone";
+          const isEmail = field.fieldName === "email";
 
-            <div className={` ${!nameIsValid && field.fieldName === 'name' ? 'flex' : 'hidden'} gap-2`}>
-              <p className="text-xs text-red-500">This is required</p>
-              <p className="text-xs text-red-500">*</p>
+          return (
+            <div key={field.fieldName} className="flex flex-col gap-0.5">
+              <label htmlFor={field.fieldName} className="font-semibold">
+                {field.label} {isName && "*"}
+              </label>
+
+              <div
+                className={`p-0.5 text-base focus-within:border focus-within:rounded ${!nameIsValid && isName
+                  ? "focus-within:border-red-500"
+                  : "focus-within:border-blue-500"
+                  }`}
+              >
+                <input
+                  id={field.fieldName}
+                  name={field.fieldName}
+                  type={isEmail ? "email" : isPhone ? "tel" : "text"}
+                  ref={isName ? nameRef : undefined}
+                  value={isPhone ? numberOnly : undefined}
+                  onChange={isPhone ? handleNumbers : undefined}
+                  inputMode={isPhone ? "numeric" : undefined}
+                  pattern={isPhone ? "[0-9]*" : undefined}
+                  maxLength={isPhone ? 10 : undefined}
+                  className="outline-0 border-(--border) border rounded w-full p-1"
+                />
+              </div>
+
+              {!nameIsValid && isName && (
+                <div className="flex gap-2">
+                  <p className="text-xs text-red-500">This is required</p>
+                  <p className="text-xs text-red-500">*</p>
+                </div>
+              )}
             </div>
-          </div >
-        ))
-      }
+          )
+        })}
     </>
   );
 }
