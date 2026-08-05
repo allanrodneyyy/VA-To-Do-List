@@ -1,4 +1,4 @@
-export const dropdowns = [{
+export const statusDropdown = [{
   id: 0,
   fieldName: "status",
   label: 'Status',
@@ -15,8 +15,9 @@ export const dropdowns = [{
       id: 3,
       label: "Completed",
     }]
-},
-{
+}]
+
+export const priorityDropdown = [{
   id: 1,
   fieldName: "priority",
   label: 'Priority',
@@ -35,4 +36,3 @@ export const dropdowns = [{
       label: "High",
     }]
 }]
-

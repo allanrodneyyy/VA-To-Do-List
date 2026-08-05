@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { Clients } from "../../../data/clients";
 import Buttons from "../../ui/buttons/Buttons";
 import { Link } from "react-router";
-import { dropdowns } from "../../../data/dropdowns";
+import { priorityDropdown, statusDropdown } from "../../../data/dropdowns";
+
 
 export function ClientsTable({ clientData }) {
 
@@ -16,35 +17,20 @@ export function ClientsTable({ clientData }) {
     'Actions'
   ]
 
-  const statuses = {
-    1: 'Active',
-    2: 'On hold',
-    3: 'Completed'
-  }
 
+  function DisplayStatusAndPriority({ id, field }) {
 
-  function StatusButton({ id }) {
-    return (
-      <button>
-        {statuses[id]}
-      </button>
-    )
-  }
+    const dropdown = field === 'status' ? statusDropdown : priorityDropdown;
 
-  function DisplayPriority({ id }) {
-    {
-
-      if (Number(id) === 1)
-        return <p>Low</p>
-      else if (Number(id) === 2)
-        return <p>Medium</p>
-      else
-        return <p>High</p>
+    if (!id) return null;
+    if (field === 'status') {
+      const status = dropdown[0].options.find(op => op.id === Number(id));
+      return status ? status.label : null;
+    } else {
+      const priority = dropdown[0].options.find(op => op.id === Number(id));
+      return priority ? priority.label : null;
     }
   }
-
-
-
 
 
 
@@ -65,9 +51,9 @@ export function ClientsTable({ clientData }) {
           {clientData.map((data) => (
             <tr key={data.id} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
               <td className="p-3"> {data.name} </td>
-              <td className="text-center"> <StatusButton id={data.status} /> </td>
-              <td className="text-center"><DisplayPriority id={data.priority} /> </td>
-              <td> { } </td>
+              <td className="text-center"><DisplayStatusAndPriority id={data.status} field='status' /></td>
+              <td className="text-center"><DisplayStatusAndPriority id={data.status} /> </td>
+              <td>  </td>
               <td> { } </td>
               <td className="text-center"> {data.phone ? data.phone : '-'} </td>
               <td className="text-center ">

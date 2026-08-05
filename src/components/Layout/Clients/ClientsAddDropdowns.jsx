@@ -1,6 +1,7 @@
-import { dropdowns } from "../../../data/dropdowns";
-
+import { statusDropdown, priorityDropdown } from "../../../data/dropdowns";
 export function ClientsAddDropdowns({ theme, setTheme }) {
+
+  let dropdowns = [...statusDropdown, ...priorityDropdown];
 
   return (
     <>
