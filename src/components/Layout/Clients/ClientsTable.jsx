@@ -50,11 +50,18 @@ export function ClientsTable({ clientData }) {
         <tbody>
           {clientData.map((data) => (
             <tr key={data.id} className="border-l border-b border-r border-gray-200 hover:bg-gray-50 ">
-              <td className="p-3"> {data.name} </td>
-              <td className="text-center"><DisplayStatusAndPriority id={data.status} field='status' /></td>
+              <td className="p-3 flex gap-2 items-center font-semibold">
+                <p className="border py-1.5 px-3 rounded-3xl border-gray-300">
+                  {data.name.substring(0, 2)}
+                </p>
+                {data.name}
+              </td>
+              <td className="text-center">
+                <DisplayStatusAndPriority id={data.status} field='status' />
+              </td>
               <td className="text-center"><DisplayStatusAndPriority id={data.status} /> </td>
-              <td>  </td>
-              <td> { } </td>
+              <td className="text-center font-mono text-sm">0</td>
+              <td className="text-center font-mono text-sm"> {'0.0h'} </td>
               <td className="text-center"> {data.phone ? data.phone : '-'} </td>
               <td className="text-center ">
                 <Link className="cursor-pointer hover:bg-gray-200 px-5 rounded py-1" value={data.id}
