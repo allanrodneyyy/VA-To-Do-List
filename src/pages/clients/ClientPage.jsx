@@ -1,10 +1,9 @@
 import { useParams, Link } from "react-router";
-import { Header } from "../components/Layout/Header";
+import { Header } from "../../components/Layout/Header";
 import { MdArrowBack } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import { ClientViewBoxes } from "../components/Layout/Clients/View/ClientViewBoxes";
+import { ClientViewBoxes } from "../../components/Layout/Clients/View/ClientViewBoxes";
 import { useEffect, useState } from "react";
-
 
 
 export function ClientPage({ theme, setTheme, setClientData, clientData }) {

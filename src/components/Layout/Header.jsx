@@ -30,6 +30,7 @@ export function Header({ theme, setTheme }) {
     {
       name: "Tasks",
       icon: <MdOutlineTaskAlt size={24} />,
+      link: "/tasks"
     },
     {
       name: "Time Tracking",

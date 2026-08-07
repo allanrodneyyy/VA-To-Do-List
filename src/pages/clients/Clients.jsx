@@ -1,11 +1,11 @@
-import { Header } from "../components/Layout/Header";
-import Buttons from "../components/ui/buttons/Buttons";
+import { Header } from "../../components/Layout/Header";
+import Buttons from "../../components/ui/buttons/Buttons";
 import { useEffect, useRef, useState } from "react";
-import { DropdownSort } from "../components/Layout/Clients/DropdownSort";
-import { ClientsTable } from "../components/Layout/Clients/ClientsTable";
-import { ClientsAddModal } from "../components/Layout/Clients/ClientsAddModal";
+import { DropdownSort } from "../../components/Layout/Clients/DropdownSort";
+import { ClientsTable } from "../../components/Layout/Clients/ClientsTable";
+import { ClientsAddModal } from "../../components/Layout/Clients/ClientsAddModal";
 import { MdOutlineAdd, MdOutlineSearch } from "react-icons/md";
-import '../App.css'
+import '../../App.css'
 
 export function Clients({ theme, setTheme, clientData, setClientData, clientsRef }) {
 
