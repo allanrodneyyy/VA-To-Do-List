@@ -35,7 +35,7 @@ export function TasksPage({ theme, setTheme }) {
             </div>
 
             <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2">
-              <section className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2">
+              <section className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2" draggable>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     <MdDragIndicator color="gray" className="cursor-grab" size={20} />
@@ -62,6 +62,17 @@ export function TasksPage({ theme, setTheme }) {
                 </div>
 
               </section>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 ">
+            <div className="flex gap-2 font-semibold items-center">
+              <p>In Progress</p>
+              <p className="bg-black text-white rounded-2xl px-2 py-0.5">0</p>
+            </div>
+
+            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2">
+
             </div>
           </div>
         </section>
