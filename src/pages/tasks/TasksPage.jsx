@@ -1,15 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Header } from "../../components/Layout/Header";
 import Buttons from "../../components/ui/buttons/Buttons";
 import { MdOutlineAdd, MdDragIndicator } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { Tasks } from "../../data/tasks";
 
 export function TasksPage({ theme, setTheme }) {
 
-  const [todo, setTodo] = useState([]);
-  const [inProgress, setInProgress] = useState([]);
-  const [review, setReview] = useState([]);
-  const [done, setDone] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const tasksRef = useRef([]);
+  const taskDraggedId = useRef(null);
+
+
+  useEffect(() => {
+    tasksRef.current = new Tasks('Tasks');
+    setTasks(tasksRef.current.tasksList);
+  }, []);
+
+  const todoTasks = tasks.filter(tasks => tasks.status_id === 1);
+  const progressTasks = tasks.filter(tasks => Number(tasks.status_id) === 2);
+  const reviewTasks = tasks.filter(tasks => tasks.status_id === 3);
+  const doneTasks = tasks.filter(tasks => tasks.status_id === 4);
+
+
+
+
+  const handleDragStart = (e, id) => {
+    taskDraggedId.current = id;
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  }
+
+  const handleOnDrop = (e, status_id) => {
+    e.preventDefault();
+
+    const id = taskDraggedId.current;
+
+    let draggedTask = tasks.find(task => task.id === id);
+
+    setTasks(prevTasks => {
+      const updatedTasks = prevTasks.map(tasks =>
+        tasks.id === id ? { ...tasks, status_id } : tasks);
+
+      return updatedTasks
+    });
+
+    // setTasks(prevTasks => {
+    //   const updatedTasks = prevTasks.map(task =>
+    //     task.id === id
+    //       ? { ...task, status_id }
+    //       : task
+    //   );
+    //   const updatedTask = updatedTasks.find(task => task.id === id);
+    //   saveData(id, updatedTask);
+
+    //   return updatedTask;
+    // });
+
+  }
+
+  function saveData(id, draggedTask) {
+    tasksRef.current.removeTasks(id);
+    tasksRef.current.addTasks(draggedTask);
+  }
 
   return (
     <>
@@ -31,37 +86,42 @@ export function TasksPage({ theme, setTheme }) {
           <div className="flex flex-col gap-2 ">
             <div className="flex gap-2 font-semibold items-center">
               <p>To Do</p>
-              <p className="bg-black text-white rounded-2xl px-2 py-0.5">0</p>
+              <p className="bg-black text-white rounded-2xl px-2 py-0.5">{todoTasks.length}</p>
             </div>
 
-            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2">
-              <section className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2" draggable>
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-2">
-                    <MdDragIndicator color="gray" className="cursor-grab" size={20} />
-                    <div>
-                      <p>Web Development</p>
-                      <p className="text-xs text-gray-400">Allan Rodney Maniago</p>
+            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2"
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleOnDrop(e, 1)}>
+              {todoTasks.map((task) => (
+                <section key={task.id} className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2" draggable
+                  onDragStart={(e) => handleDragStart(e, task.id)}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-2">
+                      <MdDragIndicator color="gray" className="cursor-grab" size={20} />
+                      <div>
+                        <p>{task.title}</p>
+                        <p className="text-xs text-gray-400">Allan Rodney Maniago</p>
+                      </div>
+
                     </div>
-
-                  </div>
-                  <BiDotsVerticalRounded color="gray" className="hover:text-black hover:cursor-pointer" size={20} />
-                </div>
-
-                <div className="pl-7 space-y-2 text-gray-400 text-sm">
-                  <p className="line-clamp-3 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.</p>
-                  <div>
-                    <p>High</p>
-                    <p>Category</p>
-                  </div>
-                  <div className="space-y-1">
-                    <p>Date</p>
-                    <p>5h estimated</p>
+                    <BiDotsVerticalRounded color="gray" className="hover:text-black hover:cursor-pointer" size={20} />
                   </div>
 
-                </div>
-
-              </section>
+                  <div className="pl-7 space-y-2 text-gray-400 text-sm">
+                    <p className="line-clamp-3 ">{task.description}</p>
+                    <div>
+                      <p>{task.priority_id}</p>
+                      <p>{task.category}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p>{task.deadline}</p>
+                      <p>{task.hours}h estimated time</p>
+                    </div>
+                  </div>
+                </section>
+              ))
+              }
             </div>
           </div>
 
@@ -71,8 +131,39 @@ export function TasksPage({ theme, setTheme }) {
               <p className="bg-black text-white rounded-2xl px-2 py-0.5">0</p>
             </div>
 
-            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2">
+            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2"
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleOnDrop(e, 2)}>
+              {progressTasks.map((task) => (
+                <section key={task.id} className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2" draggable
+                  onDragStart={(e) => handleDragStart(e, task.id)}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-2">
+                      <MdDragIndicator color="gray" className="cursor-grab" size={20} />
+                      <div>
+                        <p>{task.title}</p>
+                        <p className="text-xs text-gray-400">Allan Rodney Maniago</p>
+                      </div>
 
+                    </div>
+                    <BiDotsVerticalRounded color="gray" className="hover:text-black hover:cursor-pointer" size={20} />
+                  </div>
+
+                  <div className="pl-7 space-y-2 text-gray-400 text-sm">
+                    <p className="line-clamp-3 ">{task.description}</p>
+                    <div>
+                      <p>{task.priority_id}</p>
+                      <p>{task.category}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p>{task.deadline}</p>
+                      <p>{task.hours}h estimated time</p>
+                    </div>
+                  </div>
+                </section>
+              ))
+              }
             </div>
           </div>
         </section>
