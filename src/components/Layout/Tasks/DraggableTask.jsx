@@ -2,10 +2,12 @@ import { MdDragIndicator } from "react-icons/md";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useSortable } from '@dnd-kit/react/sortable';
 import { useDraggable } from "@dnd-kit/react";
+import { RestrictToWindow } from '@dnd-kit/dom/modifiers';
 
 export function DraggableTask({ id, task, index }) {
   const { ref, isDragging } = useDraggable({
-    id
+    id,
+    modifiers: [RestrictToWindow]x
   });
 
   return (

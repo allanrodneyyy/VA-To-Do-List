@@ -6,6 +6,7 @@ import { Tasks } from "../../data/tasks";
 import { TasksBoard } from "../../components/Layout/Tasks/TasksBoard";
 import { DragDropProvider } from "@dnd-kit/react";
 import { PointerSensor, PointerActivationConstraints } from '@dnd-kit/dom';
+import { arrayMove } from "@dnd-kit/sortable";
 export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
 
   const todoTasks = tasks.filter(task => Number(task.status_id) === 1);
@@ -32,6 +33,8 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
   }]
 
 
+  const getTaskPos = (id) => tasks.findIndex((task) => task.id === id);
+
   function handleDragEnd(event, manager) {
     const { operation, canceled } = event;
     const { source, target } = operation;
@@ -41,6 +44,8 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
     if (source.id === target.id) return
 
     setTasks((prev) => {
+      const originalPos = getTaskPos(source.id);
+      const newPos = getTaskPos(target.id);
       const draggedTask = prev.find(d => d.id === source.id);
       const isDraggedToAnotherTask = prev.find(d => d.id === target.id);
       const newStatusId = isDraggedToAnotherTask ? isDraggedToAnotherTask.status_id : target.id;
@@ -52,27 +57,14 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
           }
         return data;
       });
-      return updatedTasks
+
+      const taskToUpdate = updatedTasks.find(d => d.id === source.id);
+      saveData(source.id, taskToUpdate);
+
+      const newTasks = arrayMove(updatedTasks, originalPos, newPos);
+
+      return newTasks
     });
-
-    // if (!over) return;
-
-    // if (active.id === over.id) {
-    //   return;
-    // }
-
-    // setTasks((prev) => {
-    //   const draggedTask = prev.find(d => d.id === active.id);
-    //   const isDraggedToAnotherTask = prev.find(d => d.id === over.id);
-    //   const newStatusId = isDraggedToAnotherTask ? isDraggedToAnotherTask.status_id : over.id;
-    //   const updatedTasks = prev.map((data) => {
-    //     if (data.id === active.id) {
-    //       data.status_id = newStatusId;
-    //     }
-    //     return data;
-    //   });
-    //   return updatedTasks
-    // });
 
   }
 

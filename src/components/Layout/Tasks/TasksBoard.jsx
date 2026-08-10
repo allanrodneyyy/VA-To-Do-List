@@ -1,9 +1,12 @@
+import { closestCenter } from "@dnd-kit/collision";
 import { DraggableTask } from "./DraggableTask";
 import { useDroppable } from "@dnd-kit/react";
 
 export function TasksBoard({ title, status_id, tasks }) {
   const { isDropTarget, ref } = useDroppable({
-    id: status_id
+    id: status_id,
+    collisionDetector: closestCenter,
+
   });
 
   return (
@@ -14,7 +17,7 @@ export function TasksBoard({ title, status_id, tasks }) {
           <p className="bg-black text-white rounded-2xl px-2 py-0.5">{tasks.length}</p>
         </div>
 
-        <div className={`border rounded  p-2 bg-gray-200 min-h-150 space-y-2 ${isDropTarget ? "border-green-200" : "border-(--border)"}`} >
+        <div className={`border rounded  p-2 bg-gray-200 min-h-150 space-y-2 ${isDropTarget ? "border-green-400" : "border-(--border)"}`} >
           {tasks.map((task, index) => (
             <DraggableTask key={task.id} id={task.id} task={task} index={index} />
           ))}
