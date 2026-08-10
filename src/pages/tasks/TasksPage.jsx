@@ -1,67 +1,84 @@
 import { useEffect, useState, useRef } from "react";
 import { Header } from "../../components/Layout/Header";
 import Buttons from "../../components/ui/buttons/Buttons";
-import { MdOutlineAdd, MdDragIndicator } from "react-icons/md";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { MdOutlineAdd } from "react-icons/md";
 import { Tasks } from "../../data/tasks";
+import { TasksBoard } from "../../components/Layout/Tasks/TasksBoard";
+import { DragDropProvider } from "@dnd-kit/react";
+import { PointerSensor, PointerActivationConstraints } from '@dnd-kit/dom';
+export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
 
-export function TasksPage({ theme, setTheme }) {
+  const todoTasks = tasks.filter(task => Number(task.status_id) === 1);
+  const progressTasks = tasks.filter(task => Number(task.status_id) === 2);
+  const reviewTasks = tasks.filter(task => Number(task.status_id) === 3);
+  const doneTasks = tasks.filter(task => Number(task.status_id) === 4);
 
-  const [tasks, setTasks] = useState([]);
-  const tasksRef = useRef([]);
-  const taskDraggedId = useRef(null);
+  const taskBoards = [{
+    id: 1,
+    name: 'To Do',
+    datas: todoTasks
+  }, {
+    id: 2,
+    name: 'In progress',
+    datas: progressTasks
+  }, {
+    id: 3,
+    name: 'Review',
+    datas: reviewTasks
+  }, {
+    id: 4,
+    name: 'Done',
+    datas: doneTasks
+  }]
 
 
-  useEffect(() => {
-    tasksRef.current = new Tasks('Tasks');
-    setTasks(tasksRef.current.tasksList);
-  }, []);
+  function handleDragEnd(event, manager) {
+    const { operation, canceled } = event;
+    const { source, target } = operation;
 
-  const todoTasks = tasks.filter(tasks => tasks.status_id === 1);
-  const progressTasks = tasks.filter(tasks => Number(tasks.status_id) === 2);
-  const reviewTasks = tasks.filter(tasks => tasks.status_id === 3);
-  const doneTasks = tasks.filter(tasks => tasks.status_id === 4);
+    if (canceled || !target) return;
 
+    if (source.id === target.id) return
 
-
-
-  const handleDragStart = (e, id) => {
-    taskDraggedId.current = id;
-  }
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  }
-
-  const handleOnDrop = (e, status_id) => {
-    e.preventDefault();
-
-    const id = taskDraggedId.current;
-
-    let draggedTask = tasks.find(task => task.id === id);
-
-    setTasks(prevTasks => {
-      const updatedTasks = prevTasks.map(tasks =>
-        tasks.id === id ? { ...tasks, status_id } : tasks);
-
+    setTasks((prev) => {
+      const draggedTask = prev.find(d => d.id === source.id);
+      const isDraggedToAnotherTask = prev.find(d => d.id === target.id);
+      const newStatusId = isDraggedToAnotherTask ? isDraggedToAnotherTask.status_id : target.id;
+      const updatedTasks = prev.map((data) => {
+        if (data.id === source.id)
+          return {
+            ...data,
+            status_id: newStatusId
+          }
+        return data;
+      });
       return updatedTasks
     });
 
-    // setTasks(prevTasks => {
-    //   const updatedTasks = prevTasks.map(task =>
-    //     task.id === id
-    //       ? { ...task, status_id }
-    //       : task
-    //   );
-    //   const updatedTask = updatedTasks.find(task => task.id === id);
-    //   saveData(id, updatedTask);
+    // if (!over) return;
 
-    //   return updatedTask;
+    // if (active.id === over.id) {
+    //   return;
+    // }
+
+    // setTasks((prev) => {
+    //   const draggedTask = prev.find(d => d.id === active.id);
+    //   const isDraggedToAnotherTask = prev.find(d => d.id === over.id);
+    //   const newStatusId = isDraggedToAnotherTask ? isDraggedToAnotherTask.status_id : over.id;
+    //   const updatedTasks = prev.map((data) => {
+    //     if (data.id === active.id) {
+    //       data.status_id = newStatusId;
+    //     }
+    //     return data;
+    //   });
+    //   return updatedTasks
     // });
 
   }
 
+
   function saveData(id, draggedTask) {
+
     tasksRef.current.removeTasks(id);
     tasksRef.current.addTasks(draggedTask);
   }
@@ -82,91 +99,32 @@ export function TasksPage({ theme, setTheme }) {
             <MdOutlineAdd />New Task</Buttons>
         </div>
 
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
-          <div className="flex flex-col gap-2 ">
-            <div className="flex gap-2 font-semibold items-center">
-              <p>To Do</p>
-              <p className="bg-black text-white rounded-2xl px-2 py-0.5">{todoTasks.length}</p>
-            </div>
 
-            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2"
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleOnDrop(e, 1)}>
-              {todoTasks.map((task) => (
-                <section key={task.id} className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2" draggable
-                  onDragStart={(e) => handleDragStart(e, task.id)}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center gap-2">
-                      <MdDragIndicator color="gray" className="cursor-grab" size={20} />
-                      <div>
-                        <p>{task.title}</p>
-                        <p className="text-xs text-gray-400">Allan Rodney Maniago</p>
-                      </div>
+        <DragDropProvider
+          onDragEnd={handleDragEnd}
+          sensors={(defaults) => [
+            ...defaults.filter((sensor) => sensor !== PointerSensor),
+            PointerSensor.configure({
+              activationConstraints(event, source) {
+                if (event.pointerType === 'touch') {
+                  return [
+                    new PointerActivationConstraints.Delay({ value: 500, tolerance: { x: 5, y: 5 } }),
+                  ];
+                }
+                return [new PointerActivationConstraints.Distance({ value: 8 })];
+              },
+            }),
+          ]}
 
-                    </div>
-                    <BiDotsVerticalRounded color="gray" className="hover:text-black hover:cursor-pointer" size={20} />
-                  </div>
+        >
+          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
+            {taskBoards.map((board) => (
+              <TasksBoard key={board.id} title={board.name} status_id={board.id} tasks={board.datas} />
+            ))}
+          </section>
 
-                  <div className="pl-7 space-y-2 text-gray-400 text-sm">
-                    <p className="line-clamp-3 ">{task.description}</p>
-                    <div>
-                      <p>{task.priority_id}</p>
-                      <p>{task.category}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p>{task.deadline}</p>
-                      <p>{task.hours}h estimated time</p>
-                    </div>
-                  </div>
-                </section>
-              ))
-              }
-            </div>
-          </div>
+        </DragDropProvider>
 
-          <div className="flex flex-col gap-2 ">
-            <div className="flex gap-2 font-semibold items-center">
-              <p>In Progress</p>
-              <p className="bg-black text-white rounded-2xl px-2 py-0.5">0</p>
-            </div>
-
-            <div className="border rounded border-(--border) p-2 bg-gray-200 min-h-150 space-y-2"
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleOnDrop(e, 2)}>
-              {progressTasks.map((task) => (
-                <section key={task.id} className="flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2" draggable
-                  onDragStart={(e) => handleDragStart(e, task.id)}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center gap-2">
-                      <MdDragIndicator color="gray" className="cursor-grab" size={20} />
-                      <div>
-                        <p>{task.title}</p>
-                        <p className="text-xs text-gray-400">Allan Rodney Maniago</p>
-                      </div>
-
-                    </div>
-                    <BiDotsVerticalRounded color="gray" className="hover:text-black hover:cursor-pointer" size={20} />
-                  </div>
-
-                  <div className="pl-7 space-y-2 text-gray-400 text-sm">
-                    <p className="line-clamp-3 ">{task.description}</p>
-                    <div>
-                      <p>{task.priority_id}</p>
-                      <p>{task.category}</p>
-                    </div>
-                    <div className="space-y-1">
-                      <p>{task.deadline}</p>
-                      <p>{task.hours}h estimated time</p>
-                    </div>
-                  </div>
-                </section>
-              ))
-              }
-            </div>
-          </div>
-        </section>
       </section>
     </>
   );
