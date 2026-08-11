@@ -37,7 +37,8 @@ function App() {
         <Route index element={<Dashboard theme={theme} setTheme={setTheme} />} />
         <Route path="clients" element={<Clients theme={theme} setTheme={setTheme} clientsRef={clientsRef} setClientData={setClientData} clientData={clientData} />} />
         <Route path="/client/:id" element={<ClientPage theme={theme} setTheme={setTheme} setClientData={setClientData} clientData={clientData} />} />
-        <Route path="tasks" element={<TasksPage theme={theme} setTheme={setTheme} tasks={tasks} setTasks={setTasks} tasksRef={tasksRef} />} />
+        <Route path="tasks" element={<TasksPage theme={theme} setTheme={setTheme}
+          tasks={tasks} setTasks={setTasks} tasksRef={tasksRef} clientData={clientData} />} />
       </Routes>
 
     </>

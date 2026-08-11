@@ -10,7 +10,7 @@ import { PointerSensor, PointerActivationConstraints } from '@dnd-kit/dom';
 import { arrayMove } from "@dnd-kit/sortable";
 
 
-export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
+export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientData }) {
 
   const todoTasks = tasks.filter(task => Number(task.status_id) === 1);
   const progressTasks = tasks.filter(task => Number(task.status_id) === 2);
@@ -99,7 +99,7 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
             <MdOutlineAdd />
             New Task
           </Buttons>
-          <TasksAddModal tasksDialogRef={tasksDialogRef} />
+          <TasksAddModal tasksDialogRef={tasksDialogRef} clientData={clientData} />
         </div>
         <DragDropProvider
           onDragEnd={handleDragEnd}

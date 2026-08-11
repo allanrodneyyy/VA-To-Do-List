@@ -1,6 +1,7 @@
+import { TasksAddModalDropdowns } from "./TasksAddModalDropdowns";
 import { TasksAddModalTextfields } from "./TasksAddModalTextfields";
 
-export function TasksAddModal({ tasksDialogRef }) {
+export function TasksAddModal({ tasksDialogRef, clientData }) {
   const handleCloseModal = () => {
     tasksDialogRef.current.close();
   }
@@ -18,6 +19,7 @@ export function TasksAddModal({ tasksDialogRef }) {
         </header>
         <section className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <TasksAddModalTextfields />
+          <TasksAddModalDropdowns clientData={clientData} />
         </section>
       </form>
     </dialog>
