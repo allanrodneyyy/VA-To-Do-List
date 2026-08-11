@@ -48,7 +48,7 @@ export function TasksAddModalDropdowns({ clientData }) {
     <>
       {
         dropdowns.map((dropdown) => (
-          <div key={dropdown.fieldName} className="flex flex-col gap-0.5">
+          <div key={dropdown.fieldName} className="flex flex-col gap-0.5 col-span-2 sm:col-span-1">
             <label htmlFor={dropdown.fieldName} className="font-semibold">{dropdown.label}</label>
             <div className="flex items-center gap-1 p-0.5
             text-base
