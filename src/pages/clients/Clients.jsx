@@ -19,8 +19,6 @@ export function Clients({ theme, setTheme, clientData, setClientData, clientsRef
   const [sortStatus, setSortStatus] = useState(0);
 
   const addClient = (newClientData) => {
-
-
     const newClient = {
       id: crypto.randomUUID(),
       ...newClientData

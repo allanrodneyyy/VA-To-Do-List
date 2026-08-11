@@ -52,17 +52,15 @@ export function ClientsAddModal({ dialogRef, addClient, setFormIsOpen, theme, se
         <header className="mb-5">
           <section className="flex justify-between">
             <p className="font-bold">Add New Client</p>
-            <button className="hover:cursor-pointer" onClick={handleClose}>x</button>
+            <button className="hover:cursor-pointer" onClick={handleClose}>X</button>
           </section>
           <section>
             <p className="text-gray-500">Create a new client profile</p>
           </section>
         </header>
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 mb-5">
-
           <ClientsAddModalTextfields nameRef={nameRef} nameIsValid={nameIsValid} numberOnly={numberOnly} handleNumbers={handleNumbers} />
           <ClientsAddDropdowns theme={theme} setTheme={setTheme} />
-
           <div className="flex flex-col gap-0.5 
             cols-span-1 sm:col-span-2">
             <label htmlFor="notes" className="font-semibold">Notes</label>

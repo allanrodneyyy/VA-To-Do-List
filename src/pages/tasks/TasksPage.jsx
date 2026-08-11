@@ -4,15 +4,20 @@ import Buttons from "../../components/ui/buttons/Buttons";
 import { MdOutlineAdd } from "react-icons/md";
 import { Tasks } from "../../data/tasks";
 import { TasksBoard } from "../../components/Layout/Tasks/TasksBoard";
+import { TasksAddModal } from "../../components/Layout/Tasks/TasksAddModal";
 import { DragDropProvider } from "@dnd-kit/react";
 import { PointerSensor, PointerActivationConstraints } from '@dnd-kit/dom';
 import { arrayMove } from "@dnd-kit/sortable";
+
+
 export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
 
   const todoTasks = tasks.filter(task => Number(task.status_id) === 1);
   const progressTasks = tasks.filter(task => Number(task.status_id) === 2);
   const reviewTasks = tasks.filter(task => Number(task.status_id) === 3);
   const doneTasks = tasks.filter(task => Number(task.status_id) === 4);
+
+  const tasksDialogRef = useRef(null);
 
   const taskBoards = [{
     id: 1,
@@ -70,9 +75,12 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
 
 
   function saveData(id, draggedTask) {
-
     tasksRef.current.removeTasks(id);
     tasksRef.current.addTasks(draggedTask);
+  }
+
+  const handleOpenModal = () => {
+    tasksDialogRef.current?.showModal();
   }
 
   return (
@@ -87,11 +95,12 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef }) {
               Organise your tasks efficiently.
             </p>
           </div>
-          <Buttons variant="primary" className="flex" >
-            <MdOutlineAdd />New Task</Buttons>
+          <Buttons variant="primary" className="flex" onClick={handleOpenModal} >
+            <MdOutlineAdd />
+            New Task
+          </Buttons>
+          <TasksAddModal tasksDialogRef={tasksDialogRef} />
         </div>
-
-
         <DragDropProvider
           onDragEnd={handleDragEnd}
           sensors={(defaults) => [
