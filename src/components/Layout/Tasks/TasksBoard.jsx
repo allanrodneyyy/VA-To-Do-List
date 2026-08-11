@@ -17,7 +17,7 @@ export function TasksBoard({ title, status_id, tasks }) {
           <p className="bg-black text-white rounded-2xl px-2 py-0.5">{tasks.length}</p>
         </div>
 
-        <div className={`border rounded  p-2 bg-gray-200 min-h-150 space-y-2 ${isDropTarget ? "border-green-400" : "border-(--border)"}`} >
+        <div className={`border rounded-lg  p-2  min-h-150 space-y-2 ${isDropTarget ? "border-green-400 bg-gray-50 " : "border-(--border) bg-gray-200"}`} >
           {tasks.map((task, index) => (
             <DraggableTask key={task.id} id={task.id} task={task} index={index} />
           ))}

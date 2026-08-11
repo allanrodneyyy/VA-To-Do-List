@@ -7,12 +7,12 @@ import { RestrictToWindow } from '@dnd-kit/dom/modifiers';
 export function DraggableTask({ id, task, index }) {
   const { ref, isDragging } = useDraggable({
     id,
-    modifiers: [RestrictToWindow]x
+    modifiers: [RestrictToWindow]
   });
 
   return (
     <>
-      <section className={`flex border rounded border-(--border) shadow flex-col p-2 bg-white gap-2 touch-none w-full  ${isDragging ? "opacity-30" : "opacity-100"}
+      <section className={`flex border rounded-lg border-(--border) shadow flex-col p-2 bg-white gap-2 touch-none w-full  ${isDragging ? "opacity-30" : "opacity-100"}
       `} ref={ref}
       >
         <div className="flex items-center justify-between w-full">
