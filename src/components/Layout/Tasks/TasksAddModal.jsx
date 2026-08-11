@@ -31,7 +31,7 @@ export function TasksAddModal({ tasksDialogRef, clientData }) {
             </div>
           </div>
 
-          <div className="col-span-2 grid grid-cols-[1fr_2fr] sm:grid-cols-2">
+          <div className="col-span-2 grid grid-cols-[1fr_2fr] sm:grid-cols-2 place-items-center">
             <div className="flex flex-col gap-0.5">
               <label htmlFor='hours_take' className="font-semibold sm:hidden block ">
                 Est. Hours
