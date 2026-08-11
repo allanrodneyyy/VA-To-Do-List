@@ -22,7 +22,7 @@ export function TasksAddModal({ tasksDialogRef, clientData }) {
         <section className="grid grid-cols-1 gap-2 sm:grid-cols-2 mb-5">
           <TasksAddModalTextfields />
           <TasksAddModalDropdowns clientData={clientData} />
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col gap-0.5 sm:col-span-1 col-span-2">
             <label htmlFor='category' className="font-semibold">
               Category
             </label>
@@ -31,23 +31,29 @@ export function TasksAddModal({ tasksDialogRef, clientData }) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-0.5">
-            <label htmlFor='hours_take' className="font-semibold">
-              Estimated Hours
-            </label>
-            <div className={`p-1 flex text-base focus-within:border focus-within:rounded focus-within:border-blue-500`}>
-              <input id='hours_take' name='hours_take' className="outline-0 border-(--border) border rounded w-full p-1.5" type="number" />
+          <div className="col-span-2 grid grid-cols-[1fr_2fr] sm:grid-cols-2">
+            <div className="flex flex-col gap-0.5">
+              <label htmlFor='hours_take' className="font-semibold sm:hidden block ">
+                Est. Hours
+              </label>
+              <label htmlFor='hours_take' className="font-semibold hidden sm:block ">
+                Estimated Hours
+              </label>
+              <div className={`p-1 flex text-base focus-within:border focus-within:rounded focus-within:border-blue-500`}>
+                <input id='hours_take' name='hours_take' className="outline-0 border-(--border) border rounded w-full p-1.5" type="number" />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-0.5">
+              <label htmlFor='date' className="font-semibold">
+                Deadline
+              </label>
+              <div className={`p-1 flex text-base focus-within:border focus-within:rounded focus-within:border-blue-500`}>
+                <input id='date' name='date' className="outline-0 border-(--border) border rounded w-full p-1.5" type="date" />
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-0.5">
-            <label htmlFor='date' className="font-semibold">
-              Deadline
-            </label>
-            <div className={`p-1 flex text-base focus-within:border focus-within:rounded focus-within:border-blue-500`}>
-              <input id='date' name='date' className="outline-0 border-(--border) border rounded w-full p-1.5" type="date" />
-            </div>
-          </div>
         </section>
         <footer className="flex justify-end gap-2">
           <Buttons variant="primary" type="submit" className="flex" >
