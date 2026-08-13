@@ -2,7 +2,7 @@ export function TasksAddModalDropdowns({ clientData }) {
 
   const dropdowns = [{
     id: 1,
-    fieldName: "client",
+    fieldName: "client_id",
     label: 'Client',
     options: clientData.map((data) => ({
       id: data.id,
@@ -10,7 +10,7 @@ export function TasksAddModalDropdowns({ clientData }) {
     }))
   }, {
     id: 2,
-    fieldName: "status",
+    fieldName: "status_id",
     label: 'Status',
     options: [{
       id: 1,
@@ -56,7 +56,6 @@ export function TasksAddModalDropdowns({ clientData }) {
              focus-within:border
              focus-within:rounded">
               <select name={dropdown.fieldName} id={dropdown.id} className={`outline-0 border-(--border) border rounded w-full p-2 `} >
-                {dropdown.fieldName === 'client' && <option disabled selected>Select a client</option>}
                 {
                   dropdown.options.map((option, index) => (
                     <option key={option.id} value={option.id} >{option.label}</option>

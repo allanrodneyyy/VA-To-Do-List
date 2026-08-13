@@ -46,7 +46,7 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
 
     if (canceled || !target) return;
 
-    if (source.id === target.id) return
+    if (source.id === target.id) return;
 
     setTasks((prev) => {
       const originalPos = getTaskPos(source.id);
@@ -64,7 +64,7 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
       });
 
       const taskToUpdate = updatedTasks.find(d => d.id === source.id);
-      saveData(source.id, taskToUpdate);
+      saveDataWhenDragged(source.id, taskToUpdate);
 
       const newTasks = arrayMove(updatedTasks, originalPos, newPos);
 
@@ -74,10 +74,21 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
   }
 
 
-  function saveData(id, draggedTask) {
+  function saveDataWhenDragged(id, draggedTask) {
     tasksRef.current.removeTasks(id);
     tasksRef.current.addTasks(draggedTask);
   }
+
+  const saveDataWhenSubmitted = (taskData) => {
+    taskData = {
+      id: crypto.randomUUID(),
+      ...taskData
+    }
+    tasksRef.current.addTasks(taskData);
+
+    setTasks([...tasksRef.current.tasksList]);
+  }
+
 
   const handleOpenModal = () => {
     tasksDialogRef.current?.showModal();
@@ -99,7 +110,7 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
             <MdOutlineAdd />
             New Task
           </Buttons>
-          <TasksAddModal tasksDialogRef={tasksDialogRef} clientData={clientData} />
+          <TasksAddModal tasksDialogRef={tasksDialogRef} clientData={clientData} saveDataWhenSubmitted={saveDataWhenSubmitted} />
         </div>
         <DragDropProvider
           onDragEnd={handleDragEnd}

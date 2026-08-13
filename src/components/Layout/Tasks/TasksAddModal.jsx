@@ -3,15 +3,27 @@ import Buttons from "../../ui/buttons/Buttons";
 import { TasksAddModalDropdowns } from "./TasksAddModalDropdowns";
 import { TasksAddModalTextfields } from "./TasksAddModalTextfields";
 
-export function TasksAddModal({ tasksDialogRef, clientData }) {
-  const handleCloseModal = () => {
+export function TasksAddModal({ tasksDialogRef, clientData, saveDataWhenSubmitted }) {
+  function handleCloseModal(event) {
     tasksDialogRef.current.close();
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const newTask = Object.fromEntries(formData);
+    saveDataWhenSubmitted(newTask);
+
+    handleCloseModal();
+    e.target.reset();
+
   }
 
 
   return (
     <dialog ref={tasksDialogRef} className="m-auto w-[90%] sm:max-w-4/5 md:max-w-3/5 lg:max-w-2/5 backdrop:backdrop-contrast-50 p-5 rounded-xl">
-      <form className="text-sm sm:text-base">
+      <form className="text-sm sm:text-base" onSubmit={handleSubmit}>
         <header className="mb-5">
           <div className="flex justify-between">
             <p className="font-bold">Create New Task</p>
@@ -31,16 +43,16 @@ export function TasksAddModal({ tasksDialogRef, clientData }) {
             </div>
           </div>
 
-          <div className="col-span-2 grid grid-cols-[1fr_2fr] sm:grid-cols-2 place-items-center">
+          <div className="col-span-2 grid grid-cols-[1fr_2fr] sm:grid-cols-2">
             <div className="flex flex-col gap-0.5">
-              <label htmlFor='hours_take' className="font-semibold sm:hidden block ">
-                Est. Hours
+              <label htmlFor='hours' className="font-semibold sm:hidden block ">
+                Estimated Hours
               </label>
-              <label htmlFor='hours_take' className="font-semibold hidden sm:block ">
+              <label htmlFor='hours' className="font-semibold hidden sm:block ">
                 Estimated Hours
               </label>
               <div className={`p-1 flex text-base focus-within:border focus-within:rounded focus-within:border-blue-500`}>
-                <input id='hours_take' name='hours_take' className="outline-0 border-(--border) border rounded w-full p-1.5" type="number" />
+                <input id='hours' name='hours' className="outline-0 border-(--border) border rounded w-full p-1.5" type="number" />
               </div>
             </div>
 
