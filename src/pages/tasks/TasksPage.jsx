@@ -6,71 +6,57 @@ import { Tasks } from "../../data/tasks";
 import { TasksBoard } from "../../components/Layout/Tasks/TasksBoard";
 import { TasksAddModal } from "../../components/Layout/Tasks/TasksAddModal";
 import { DragDropProvider } from "@dnd-kit/react";
+import { move } from "@dnd-kit/helpers";
 import { PointerSensor, PointerActivationConstraints } from '@dnd-kit/dom';
-import { arrayMove } from "@dnd-kit/sortable";
+import { DraggableTask } from "../../components/Layout/Tasks/DraggableTask";
 
 
 export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientData }) {
 
-  const todoTasks = tasks.filter(task => Number(task.status_id) === 1);
-  const progressTasks = tasks.filter(task => Number(task.status_id) === 2);
-  const reviewTasks = tasks.filter(task => Number(task.status_id) === 3);
-  const doneTasks = tasks.filter(task => Number(task.status_id) === 4);
-
   const tasksDialogRef = useRef(null);
+  const previousItems = useRef(tasks);
 
-  const taskBoards = [{
-    id: 1,
-    name: 'To Do',
-    datas: todoTasks
-  }, {
-    id: 2,
-    name: 'In progress',
-    datas: progressTasks
-  }, {
-    id: 3,
-    name: 'Review',
-    datas: reviewTasks
-  }, {
-    id: 4,
-    name: 'Done',
-    datas: doneTasks
-  }]
+  const taskBoards = [
+    {
+      id: 1,
+      name: "To Do",
+      datas: tasks.filter(task => Number(task.status_id) === 1)
+    },
+    {
+      id: 2,
+      name: "In progress",
+      datas: tasks.filter(task => Number(task.status_id) === 2)
+    },
+    {
+      id: 3,
+      name: "Review",
+      datas: tasks.filter(task => Number(task.status_id) === 3)
+    },
+    {
+      id: 4,
+      name: "Done",
+      datas: tasks.filter(task => Number(task.status_id) === 4)
+    }
+  ];
 
-
-  const getTaskPos = (id) => tasks.findIndex((task) => task.id === id);
 
   function handleDragEnd(event, manager) {
-    const { operation, canceled } = event;
-    const { source, target } = operation;
+    const { source, target } = event.operation;
 
-    if (canceled || !target) return;
+    if (event.canceled) {
+      if (source.type === 'item') {
+        setTasks(previousItems.current);
+      }
+      return;
+    }
+  }
 
-    if (source.id === target.id) return;
+  function handleDragOver(event) {
+    const { source, target } = event.operation;
 
-    setTasks((prev) => {
-      const originalPos = getTaskPos(source.id);
-      const newPos = getTaskPos(target.id);
-      const draggedTask = prev.find(d => d.id === source.id);
-      const isDraggedToAnotherTask = prev.find(d => d.id === target.id);
-      const newStatusId = isDraggedToAnotherTask ? isDraggedToAnotherTask.status_id : target.id;
-      const updatedTasks = prev.map((data) => {
-        if (data.id === source.id)
-          return {
-            ...data,
-            status_id: newStatusId
-          }
-        return data;
-      });
+    if (source?.type === 'column') return;
 
-      const taskToUpdate = updatedTasks.find(d => d.id === source.id);
-      saveDataWhenDragged(source.id, taskToUpdate);
-
-      const newTasks = arrayMove(updatedTasks, originalPos, newPos);
-
-      return newTasks
-    });
-
+    setTasks((items) => move(items, event));
   }
 
 
@@ -94,6 +80,7 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
     tasksDialogRef.current?.showModal();
   }
 
+
   return (
     <>
       <Header theme={theme} setTheme={setTheme} />
@@ -113,6 +100,10 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
           <TasksAddModal tasksDialogRef={tasksDialogRef} clientData={clientData} saveDataWhenSubmitted={saveDataWhenSubmitted} />
         </div>
         <DragDropProvider
+          onDragStart={() => {
+            previousItems.current = tasks;
+          }}
+          onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
           sensors={(defaults) => [
             ...defaults.filter((sensor) => sensor !== PointerSensor),
@@ -130,14 +121,19 @@ export function TasksPage({ theme, setTheme, tasks, setTasks, tasksRef, clientDa
 
         >
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
-            {taskBoards.map((board) => (
-              <TasksBoard key={board.id} title={board.name} status_id={board.id} tasks={board.datas} />
-            ))}
+            {taskBoards.map((board, i) => (
+              <TasksBoard key={board.id} id={board.id}>
+                {board.datas.map((data, index) => (
+                  <DraggableTask key={data.id} id={data.id} index={index} column={board.id} task={data} />
+                ))}
+              </TasksBoard>
+            ))
+            }
           </section>
 
-        </DragDropProvider>
+        </DragDropProvider >
 
-      </section>
+      </section >
     </>
   );
 }
